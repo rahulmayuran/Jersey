@@ -1,8 +1,5 @@
 package edu.learn.rest.Entity;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement
 public class Transport {
 
 	private String units;

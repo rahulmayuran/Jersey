@@ -19,8 +19,8 @@ public class TransportXMLController {
 	 * and then a GET method 
 	 */
 	@GET
-	@Produces(MediaType.APPLICATION_XML)
-	public List<Transport> getTransportAsXML() {
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Transport> getTransportAsJSON() {
 		
 		System.out.println("Inside GET method for generating JSON response");
 		

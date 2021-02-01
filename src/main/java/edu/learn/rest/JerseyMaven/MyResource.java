@@ -19,7 +19,7 @@ public class MyResource {
      * Changing it to {@value JSON} in the MediaType , so that you can check in postman
      */
     @GET
-    @Produces(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_JSON)
     public String getIt() {
     	
         return "Got it!";

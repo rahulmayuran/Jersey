@@ -12,13 +12,13 @@ import javax.ws.rs.core.MediaType;
 import edu.learn.rest.Entity.Transport;
 import edu.learn.rest.Repository.TransportRepository;
 
-@Path("xml")
+@Path("json")
 public class TransportJSON {
 
 	TransportRepository transportRepository = new TransportRepository();
 
 	  @GET
-	  @Produces(MediaType.APPLICATION_XML) 
+	  @Produces(MediaType.APPLICATION_JSON) 
 	  public List<Transport> getAllTransport() {
 		  System.out.println("Called getAllTransports() Method from Repository class");
 		  return transportRepository.getAllTransport(); 
@@ -26,7 +26,7 @@ public class TransportJSON {
 	  
 	  @GET
 	  @Path("/{units}")
-	  @Produces(MediaType.APPLICATION_XML)
+	  @Produces(MediaType.APPLICATION_JSON)
 	  public Transport getTransportUnits(@PathParam("units") String units) 
 	  {
 		  System.out. println("Fetching source and destination with transport unit field : " + units ); 
