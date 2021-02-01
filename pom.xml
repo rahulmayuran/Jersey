@@ -41,7 +41,13 @@
 		<dependency>
 		 <groupId>org.glassfish.jersey.containers</groupId>
 		 <artifactId>jersey-container-servlet-core</artifactId>
-		</dependency>     
+		</dependency>  
+		
+		<!-- For enabling the JSON response in request methods and responses -->
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-moxy</artifactId>
+		</dependency>   
     </dependencies>
     
     <properties>

@@ -13,11 +13,16 @@ import edu.learn.rest.Entity.Transport;
 @Path("forknal")
 public class TransportXMLController {
 
+	/**
+	 * @author rahulks
+	 * @param XML is changed to JSON, revert it to any type you want and use /api/forknal in postman
+	 * and then a GET method 
+	 */
 	@GET
 	@Produces(MediaType.APPLICATION_XML)
 	public List<Transport> getTransportAsXML() {
 		
-		System.out.println("Inside GET method for generating XML response");
+		System.out.println("Inside GET method for generating JSON response");
 		
 		Transport transport1 = new Transport();
 		transport1.setUnits("MumbaiUnit");

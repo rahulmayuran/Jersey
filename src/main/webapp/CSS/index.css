@@ -1,0 +1,62 @@
+@charset "ISO-8859-1";
+
+* {
+	padding: 0px;
+	margin : 0px;
+}
+h1{
+	padding-bottom : 1em;
+	font-family: sans-serif;
+	font-weight: bold;
+}
+.input-section
+{
+	font-family : sans-serif;
+	background-color : lightblue;
+	margin-left : 2em;
+	display : block;
+	border : 10px outset lightgreen;
+	width: 700px;
+	padding: 5px;
+}label{
+	margin-left : 2em;
+	display : inline-block;
+	padding: 1px;
+	font-size: 14px;
+	font-weight: bolder;
+	cursor : progress;
+	width : 300px;
+}
+#name1, #pass1{
+	margin : 0em 1em 1em 0em;
+	display: inline;
+	padding: 1px;
+	font-size: 14px;
+	font-weight: bolder;
+	cursor : pointer;
+}
+
+button{
+	background-color: lightgreen;
+	padding: 5px;
+	border-radius: 3px;
+	display: block;
+	font-weight: bold;
+	margin-left: 2em;
+}
+
+table {
+	background-color: black;
+	color:white;
+}
+th{
+	background-color: lightgray;
+	color:black;
+	padding : 3px;
+}td{
+	padding : 3px;
+	background-color: white;
+	color:black;
+}
+
+

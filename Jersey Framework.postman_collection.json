@@ -1,0 +1,191 @@
+{
+	"info": {
+		"_postman_id": "3a1e521e-7cbc-4a72-9930-5356fbd38b62",
+		"name": "Jersey Framework",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "A sample response , by default",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/xml",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/JerseyMaven/api/myresource",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"JerseyMaven",
+						"api",
+						"myresource"
+					]
+				},
+				"description": "Using Jersey Project, Generating a JSON response using @GET and @PUT requests"
+			},
+			"response": []
+		},
+		{
+			"name": "Returns a XML response from the Controller class",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/xml",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/JerseyMaven/api/forknal",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"JerseyMaven",
+						"api",
+						"forknal"
+					]
+				},
+				"description": "Change the content Type as application/XML in the Headers tab and then send a response as XML"
+			},
+			"response": []
+		},
+		{
+			"name": "Returns a XML from the repository class",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/xml",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/JerseyMaven/api/xml",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"JerseyMaven",
+						"api",
+						"xml"
+					]
+				},
+				"description": "To return a JSON response from a Repository class called inside the controller class"
+			},
+			"response": []
+		},
+		{
+			"name": "A POST request with XML request body",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/xml",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n    <transport>\r\n        <destination>Turku Area</destination>\r\n        <source>Tampere</source>\r\n        <units>CK1010</units>\r\n    </transport>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/JerseyMaven/api/xml/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"JerseyMaven",
+						"api",
+						"xml",
+						"add"
+					]
+				},
+				"description": "Created a @Path(\"add\") to the existing path @Path(\"xml\") and @POST that has transport object"
+			},
+			"response": []
+		}
+	]
+}
