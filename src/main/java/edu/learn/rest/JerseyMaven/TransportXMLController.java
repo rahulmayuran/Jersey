@@ -11,7 +11,7 @@ import javax.ws.rs.core.MediaType;
 import edu.learn.rest.Entity.Transport;
 
 @Path("forknal")
-public class TransportController {
+public class TransportXMLController {
 
 	@GET
 	@Produces(MediaType.APPLICATION_XML)
