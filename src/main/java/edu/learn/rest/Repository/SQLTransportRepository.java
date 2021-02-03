@@ -50,8 +50,16 @@ public class SQLTransportRepository {
 			}	
 		}
 	
+	public void duplicateEntry() {
+		
+		LOGGER.fine("Duplicate entry in Database");
+		
+	}
+	
 	/*
 	 * Expects a select query as the details needs to be fetched from Database
+	 * DQL -> needs a Statement interface, executeQuery(sql) method and result set that
+	 * iterates every row of the Database.
 	 */
 	public List<Transport> getListofTransportsFromDB() {
 		
@@ -70,55 +78,120 @@ public class SQLTransportRepository {
 				transport.setDestination(rs.getString(3));
 				
 				transportList.add(transport);
+				LOGGER.info("Object Count in while loop : " + transportList.size());
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			LOGGER.warning("Exception is printed for Connection failure with Datasource" + e);
 		}
 		
-	
+		LOGGER.info("Fetching the list of Transports from the Database with : " + transportList);
+		LOGGER.info("Total number of Transport Objects created is  : " + transportList.size());
+		LOGGER.info("The URL hit in Postman is http://localhost:8082/JerseyMaven/api/json");
 		return transportList;
 		
 		}
 	
-		public Transport fetchByTransportUnitsFromDB(String units) {
+		public Transport fetchByTransportUnitsFromDB(String oneunit) {
 			
-			
-			Transport transport = new Transport();
-			
-			String selectUnitsQuery = "select * from dbo.JerseyTransport where units="+ units;
+		Transport transport = new Transport();
+		
+//		Play with "" and '' to make a string to get passed in Select statement
+		String selectUnitsQuery = "select * from dbo.JerseyTransport where units='" +oneunit + "'";
+		
+		LOGGER.info("Query Check : select * from dbo.JerseyTransport where units='" +oneunit + "'");
+		
 			try {
 				Statement statement = connect.createStatement();
 				ResultSet results =  statement.executeQuery(selectUnitsQuery);
+				
 				if(results.next()) {
-					transport.setSource(results.getString("source"));
-					transport.setDestination(results.getString("destination"));
-					transport.setUnits(results.getString("units"));
+					transport.setSource(results.getString(2));
+					transport.setDestination(results.getString(3));
+					transport.setUnits(results.getString(4));
 				}
-
-			} catch (SQLException e) {
-				LOGGER.warning("Exception is printed for Connection failure with Datasource" + e);
+	
+			} 
+			catch (SQLException e) {
+				LOGGER.warning("Exception is printed for Connection failure with Datasource" + e.getMessage());
 			}
+			
+			LOGGER.info("The Transport object fetched with unit :" + oneunit + " is : "+ transport);
+			LOGGER.info("The url in postman is http://localhost:8082/JerseyMaven/api/json/unit/"+oneunit);
 			return transport;	
 		}
 		
-		public void insertIntoSQLFromPostman(Transport insertTransport) {
+		/*
+		 * As @Id is auto generated using SQL server, you need to mention
+		 * the setString as 1,2,3 corresponding to the columns in SQL server
+		 * Using preparedStatement for DML operations of insertion, deletion and updation of records
+		 * Needs executeUpdate and setting values to specified positions in Database.
+		 */
+		public void insertIntoSQLFromPostman(Transport insertTransport) throws SQLException {
 			
 			String insertQuery = "insert into dbo.JerseyTransport values (?,?,?)";
-			try {
+			try 
+			{
 				PreparedStatement prepareStatement = connect.prepareStatement(insertQuery);
 				prepareStatement.setString(1, insertTransport.getSource());
 				prepareStatement.setString(2, insertTransport.getDestination());
-				prepareStatement.setString(3, insertTransport.getUnits());
+				prepareStatement.setString(3, insertTransport.getUnits());	
 				prepareStatement.executeUpdate();
-				
-			} catch (SQLException e) {
-				
-				LOGGER.warning("Exception is printed for Connection failure with Datasource" + e);
+				LOGGER.log(Level.INFO, "Transport object inserted from POSTman through JDBC : "+ insertTransport);
+			}
+			catch (SQLException e) {
+				LOGGER.warning("Exception is printed for Connection failure with Datasource : " + e);
+			}finally {
+				connect.close();
 			}
 			
+		}
+		/* 
+		 * As  is auto generated using SQL server, you need to mention
+		 * the setString as 1,2,3 corresponding to the columns to update values
+		 */
+		public void UpdateEntriesIntoDB(Transport insertTransport) throws SQLException {
 			
+			String updateQuery = "Update dbo.JerseyTransport set source=?, destination=? where units=?";
+			try 
+			{
+				PreparedStatement prepareStatement = connect.prepareStatement(updateQuery);
+				prepareStatement.setString(1, insertTransport.getSource());
+				prepareStatement.setString(2, insertTransport.getDestination());
+				prepareStatement.setString(3, insertTransport.getUnits());	
+				prepareStatement.executeUpdate();
+				LOGGER.log(Level.INFO, "Transport object updated from POSTman through JDBC : "+ insertTransport);
+			}
+			catch (SQLException e) {
+				LOGGER.warning("Exception is printed for Connection failure with Datasource : " + e);
+			}finally {
+				connect.close();
+			}
 			
 		}
-}
+
+		/*
+		 * Deleting with the url path /json/unit/{units}
+		 * Should provide the unit and delete  
+		 * 
+		 */
+		public void DeleteTransportsFromDB(String units) throws SQLException {
+			
+			String deleteQuery = "Delete from dbo.JerseyTransport where units=?";
+			try 
+			{
+				PreparedStatement prepareStatement = connect.prepareStatement(deleteQuery);
+				prepareStatement.setString(1, units);	
+				prepareStatement.executeUpdate();
+				LOGGER.log(Level.INFO, "Transport object deleted from POSTman through JDBC with unit: "+ units);
+			}
+			catch (SQLException e) {
+				LOGGER.warning("Exception is printed for Connection failure with Datasource : " + e);
+			}finally {
+				connect.close();
+			}
+			
+		}
+
+		
+	}
