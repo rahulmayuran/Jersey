@@ -1,0 +1,272 @@
+{
+	"info": {
+		"_postman_id": "f427f23e-ac33-4bc8-8f9e-b8f0497ebc14",
+		"name": "Jersey with MSSQL server and JSON's",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "A sample JSONresponse , by default Copy",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/JerseyMaven/api/myresource",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"JerseyMaven",
+						"api",
+						"myresource"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Returns a JSON from the repository class called in controller Copy",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/JerseyMaven/api/json",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"JerseyMaven",
+						"api",
+						"json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "A POST request with JSON request body Copy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n        \"destination\": \"Mindwitch\",\r\n        \"source\": \"Estadio Stadium\",\r\n        \"units\": \"Beijing\"\r\n    }\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/JerseyMaven/api/json/unit",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"JerseyMaven",
+						"api",
+						"json",
+						"unit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "With a specific unit, Returns a JSON from the repository class called in controller Copy",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/JerseyMaven/api/json/unit/AK1010",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"JerseyMaven",
+						"api",
+						"json",
+						"unit",
+						"AK1010"
+					]
+				},
+				"description": "AK1010 unit specific"
+			},
+			"response": []
+		},
+		{
+			"name": "PUT With a specific unit, Returns a JSON from the repository class called in controller Copy",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n        \"destination\": \"GreenPark\",\r\n        \"source\": \"Tampere\",\r\n        \"units\": \"JK1010\"\r\n    },",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/JerseyMaven/api/json/unit",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"JerseyMaven",
+						"api",
+						"json",
+						"unit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deleting using a specific unit, Returns a JSON from the repository class called in controller Copy",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/JerseyMaven/api/json/unit/AK1010",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"JerseyMaven",
+						"api",
+						"json",
+						"unit",
+						"AK1010"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -16,8 +16,8 @@ import java.util.logging.Logger;
 
 import edu.learn.rest.Entity.Transport;
 
-/**
- * @author rahulks
+/*
+ * 
  * Using normal jdbc driver without any ORM tools
  * to connect to DB
  *
@@ -43,18 +43,16 @@ public class SQLTransportRepository {
 			{
 			LOGGER.log(Level.WARNING, "Connection not established with SQL database");
 			}
+			else {
+			LOGGER.info("Connection Successful, Go ahead with SQL Operations");
+			}
 			
 			} catch (SQLException | ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				LOGGER.warning("Exception is printed for Connection failure with Datasource" + e);
 			}	
 		}
-	
-	public void duplicateEntry() {
-		
-		LOGGER.fine("Duplicate entry in Database");
-		
-	}
+
 	
 	/*
 	 * Expects a select query as the details needs to be fetched from Database
@@ -78,7 +76,6 @@ public class SQLTransportRepository {
 				transport.setDestination(rs.getString(3));
 				
 				transportList.add(transport);
-				LOGGER.info("Object Count in while loop : " + transportList.size());
 			}
 			
 		} catch (SQLException e) {
@@ -92,11 +89,15 @@ public class SQLTransportRepository {
 		
 		}
 	
+		/*
+		 * Fetching the single Transport object from the list of Transports
+		 * using the Transport ID field
+		 */
 		public Transport fetchByTransportUnitsFromDB(String oneunit) {
 			
 		Transport transport = new Transport();
 		
-//		Play with "" and '' to make a string to get passed in Select statement
+		//Play with "" and '' to make a string to get passed in Select statement
 		String selectUnitsQuery = "select * from dbo.JerseyTransport where units='" +oneunit + "'";
 		
 		LOGGER.info("Query Check : select * from dbo.JerseyTransport where units='" +oneunit + "'");
@@ -106,6 +107,11 @@ public class SQLTransportRepository {
 				ResultSet results =  statement.executeQuery(selectUnitsQuery);
 				
 				if(results.next()) {
+					LOGGER.info("Inside the Select query to fetch Transport by unit name");
+					LOGGER.info("String at Pos 2 :" + results.getString(2) +
+								"String at Pos 3 :" + results.getString(3) + 
+								"String at Pos 4 :" + results.getString(4));
+					
 					transport.setSource(results.getString(2));
 					transport.setDestination(results.getString(3));
 					transport.setUnits(results.getString(4));
@@ -133,10 +139,16 @@ public class SQLTransportRepository {
 			try 
 			{
 				PreparedStatement prepareStatement = connect.prepareStatement(insertQuery);
+				LOGGER.info("Inside the Insertion query to insert transport by unit name");
+				LOGGER.info("Source at Pos 1 :" + insertTransport.getSource() +
+							"Destination at Pos 2 :" + insertTransport.getDestination() + 
+							"Units at Pos 3 :" + insertTransport.getUnits());
+				
 				prepareStatement.setString(1, insertTransport.getSource());
 				prepareStatement.setString(2, insertTransport.getDestination());
 				prepareStatement.setString(3, insertTransport.getUnits());	
 				prepareStatement.executeUpdate();
+				
 				LOGGER.log(Level.INFO, "Transport object inserted from POSTman through JDBC : "+ insertTransport);
 			}
 			catch (SQLException e) {

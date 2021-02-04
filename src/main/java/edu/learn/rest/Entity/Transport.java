@@ -1,5 +1,9 @@
 package edu.learn.rest.Entity;
 
+/*
+ * Entity class/ Model class 
+ * without the usage of any annotations, 
+ */
 public class Transport {
 
 	private String units;

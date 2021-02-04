@@ -19,15 +19,28 @@ import javax.ws.rs.core.Response;
 import edu.learn.rest.Entity.Transport;
 import edu.learn.rest.Repository.SQLTransportRepository;
 
+/*  Controller class
+ *  value of @Path is json, 
+ *  so that you have to hit http://(localhost:port)/(ProjectName/contextPath)/(web.xml servlet mapping)/(@Path value)
+ *  Here it is http://localhost:8082/JerseyMaven/api/json
+ */
 @Path("json")
 public class SQLController {
 
+	//To log everything happening in Controller class
 	private static final Logger LOGGER = Logger.getLogger(SQLController.class.getName());
+	
+	/* Autowiring annotation should be helpful to inject the dependencies
+	 * but as we are working with corejava and JDBC without any beans.xml or
+	 * spring annotations, it is not applicable here
+	*/
 	SQLTransportRepository transportRepository = new SQLTransportRepository();
 
+	  //GET is a public @interface of HttpMethod
 	  @GET
 	  @Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML}) 
-	  public List<Transport> getAllTransportfromDB() {
+	  public List<Transport> getAllTransportfromDB() 
+	  {
 		  LOGGER.info("Called from SQLserver with the help of SQLTransportRepository");
 		  return transportRepository.getListofTransportsFromDB(); 
 	  }
@@ -39,9 +52,16 @@ public class SQLController {
 	  @Path("/{units}")
 	    public Response getTransportsByunits(@PathParam("units") String units){
 	         
+		  	LOGGER.info("To print the message in Postman using Response.status().entity().build()");
 	        return Response.status(200).entity("Got Transport with unit : " + units).build();
 	    }
 	  
+	  /*
+	   * The method level annotations will always override the Class level annotations
+	   * In that sense, you have to add the unit/BK1010 etc to url path and hit URL.
+	   * Using @PathParam , a binding happens with the url that you hit in postman and it's
+	   * value is copied to this oneunit field, that is sent to repository class to fetch Transport Object
+	   */
 	  @GET
 	  @Path("unit/{units}")
 	  @Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
@@ -58,12 +78,22 @@ public class SQLController {
 	  public Transport createTransport(Transport trans) throws SQLException {
 		  
 		  LOGGER.log(Level.INFO,"Creating a Transport JSON object :" + trans);
+		  LOGGER.info("Value is " + transportRepository.fetchByTransportUnitsFromDB(trans.getUnits()).getUnits());
+		  LOGGER.info("Value is " + transportRepository.fetchByTransportUnitsFromDB(trans.getUnits()));
+		  
+		  /* This condition will check the transport unit field to fetch the Transport object
+		   *  and that matches with the value of transportUnit field that you are hitting 
+		   *  from the postman are equal or not.
+		   *  if null, then it is a new unit and can be inserted.
+		   */
 		  if(transportRepository.fetchByTransportUnitsFromDB(trans.getUnits()).getUnits()==null) 
 		  {
 			transportRepository.insertIntoSQLFromPostman(trans);
 		  }
-		  else {
-			  LOGGER.fine("Seems like a duplicate entry of transport unit, Change the unit atleast");
+		  else 
+		  {
+		  	  LOGGER.log(Level.FINE,"Duplicate Transport unit entry :" + trans.getUnits());
+			  Response.status(200).entity("Duplicate entries").build(); 
 		  }
 			return trans;
 	  }
@@ -86,7 +116,9 @@ public class SQLController {
 		  else
 		  {
 			  LOGGER.fine("Kindly don't change the Transport unit field :" + trans.getUnits());
-			  transportRepository.duplicateEntry();
+				  for(int n=200;n<500;n++) {
+				  Response.status(n).entity("Duplicate entries").build();
+			  }
 		  }
 		  return trans;
 	  }
@@ -101,6 +133,11 @@ public class SQLController {
 		  
 		  if(deleteTransport.getUnits()!=null) {
 			  transportRepository.DeleteTransportsFromDB(units);
+		  }
+		  else {
+			 
+				  Response.status(200).entity("Unit : "+units+" not found and delete operation can't be done").build();
+			  
 		  }
 		  
 		  return deleteTransport;
