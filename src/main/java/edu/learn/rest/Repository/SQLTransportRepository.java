@@ -65,10 +65,9 @@ public class SQLTransportRepository {
 			ResultSet rs = selectStatement.executeQuery(selectQuery);
 			while(rs.next()) {
 				Transport transport = new Transport();
-				transport.setUnits(rs.getString(4));
-				transport.setSource(rs.getString(2));
-				transport.setDestination(rs.getString(3));
-				
+				transport.setUnits(rs.getString("units"));
+				transport.setSource(rs.getString("source"));
+				transport.setDestination(rs.getString("destination"));
 				transportList.add(transport);
 			}
 			
@@ -87,7 +86,7 @@ public class SQLTransportRepository {
 			
 			Transport transport = new Transport();
 			
-			String selectUnitsQuery = "select * from dbo.JerseyTransport where units="+ units;
+			String selectUnitsQuery = "select * from dbo.JerseyTransport where units='"+ units+"'";
 			try {
 				Statement statement = connect.createStatement();
 				ResultSet results =  statement.executeQuery(selectUnitsQuery);
@@ -119,6 +118,26 @@ public class SQLTransportRepository {
 			}
 			
 			
+			
+		}
+		
+		public void UpdateEntriesIntoDB(Transport insertTransport) throws SQLException {
+			
+			String updateQuery = "Update dbo.JerseyTransport set source=?, destination=? where units=?";
+			try 
+			{
+				PreparedStatement prepareStatement = connect.prepareStatement(updateQuery);
+				prepareStatement.setString(1, insertTransport.getSource());
+				prepareStatement.setString(2, insertTransport.getDestination());
+				prepareStatement.setString(3, insertTransport.getUnits());	
+				prepareStatement.executeUpdate();
+				LOGGER.log(Level.INFO, "Transport object updated from POSTman through JDBC : "+ insertTransport);
+			}
+			catch (SQLException e) {
+				LOGGER.warning("Exception is printed for Connection failure with Datasource : " + e);
+			}finally {
+				connect.close();
+			}
 			
 		}
 }
