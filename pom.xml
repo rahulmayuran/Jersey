@@ -43,6 +43,13 @@
 		 <artifactId>jersey-container-servlet-core</artifactId>
 		</dependency>  
 		
+		  <!-- For jstl jar -->
+	<dependency>
+	    <groupId>javax.servlet</groupId>
+	    <artifactId>jstl</artifactId>
+	    <version>1.2</version>
+	</dependency>
+		
 		<!-- For enabling the JSON response in request methods and responses -->
 		<dependency>
 			<groupId>org.glassfish.jersey.media</groupId>
@@ -57,6 +64,8 @@
 		</dependency>
     </dependencies>
     
+  
+	
     <properties>
         <jersey.version>2.26-b03</jersey.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

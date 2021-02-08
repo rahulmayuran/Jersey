@@ -27,7 +27,7 @@ h1{
 	cursor : progress;
 	width : 300px;
 }
-#name1, #pass1{
+#unit, #source, #oldunit, #olddest, #newdest{
 	margin : 0em 1em 1em 0em;
 	display: inline;
 	padding: 1px;
