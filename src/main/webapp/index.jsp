@@ -14,10 +14,10 @@
 
 <script> 
 $(document).ready(function(){
-	let fetchBtn = document.getElementById("getTransports"); 
+	let transportButton = document.getElementById("getTransports"); 
 
 
-	fetchBtn.addEventListener("click", 
+	transportButton.addEventListener("click", 
 
 	function buttonclickhandler() { 
 
@@ -33,18 +33,51 @@ $(document).ready(function(){
 		xhr.onload = function () { 
 			if (this.status === 200) { 
 
-				// Changing JSON data into String Object 
-				obj = JSON.stringify(this.responseText); 
+				//obj is the response obtained from postman
+				let obj = this.response;
+				console.log("Response object from GET request to fetch all transports " + obj);
+				console.log("\n")
+				
+				console.log("Prototype of response object below");
+				console.log(obj.__proto__);
+				console.log("\n")
 
+				objJson = JSON.parse(obj);
+				console.log("Parsing the response object below");
+				console.log(objJson); // In browser console, we can see the JSON
+				console.log(objJson[0].source); // in 1st record of DB, at pos 0, the source is sweden
+				console.log("\n")
+				
+				console.log("Prototype of parsed response object below")
+				console.log(objJson.__proto__);
+				console.log("\n")
+				
 				// Getting the ul element 
 				let list = document.getElementById("list");
 				
-				var splitter = obj.split("\\");
-				console.log(splitter);
+				StringConv = JSON.stringify(objJson);
+				list.innerHTML = StringConv;
+
+				let getUnitsFromDropDown = document.getElementById('unit').value;
+				console.log(getUnitsFromDropDown);
 				
-				list.innerHTML = splitter;
-				objJson = JSON.parse(obj);
-				console.log(objJson); // In browser console, we can see the JSON
+				for(let j=0 ; j<objJson.length;j++)
+					{
+						console.log("Transport at position "+[j]);
+						console.log(objJson[j]);
+
+						if(objJson[j].units === getUnitsFromDropDown){
+							console.log("\n")
+							console.log("Unit name "+objJson[j].units+" matched at position "+ [j]);
+							console.log("\n")
+							
+							let sourcefield = document.getElementById('source');
+							let destinationfield = document.getElementById('destination');
+							
+							sourcefield.value = objJson[j].source;
+							destinationfield.value = objJson[j].destination;
+							}
+					}
 			} 
 			else { 
 				console.log("File not found"); 
