@@ -32,7 +32,7 @@ public class SQLController {
 	  }
 	  
 	  @GET
-	  @Path("/{units}")
+	  @Path("unit/{units}")
 	  @Produces(MediaType.APPLICATION_JSON)
 	  public Transport getTransportUnits(@PathParam("units") String units) 
 	  {
@@ -41,7 +41,7 @@ public class SQLController {
 	  }
 	  
 	  @GET
-	  @Path("unit/{units}")
+	  @Path("unit/check/{units}")
 	    public Response getTransportsByunits(@PathParam("units") String units){
 	         
 		  	LOGGER.info("To print the message in Postman using Response.status().entity().build()");
@@ -50,7 +50,7 @@ public class SQLController {
 	 
 	  
 	  @POST
-	  @Path("add")
+	  @Path("unit/add")
 	  @Consumes({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
 	  public Transport createTransport(Transport trans) {
 		  
