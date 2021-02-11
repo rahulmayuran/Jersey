@@ -18,7 +18,7 @@ import javax.ws.rs.core.Response;
 import edu.learn.rest.Entity.Transport;
 import edu.learn.rest.Repository.SQLTransportRepository;
 
-@Path("json")
+@Path("forknal")
 public class SQLController {
 
 	private static final Logger LOGGER = Logger.getLogger(SQLController.class.getName());
@@ -31,21 +31,31 @@ public class SQLController {
 		  return transportRepository.getListofTransportsFromDB(); 
 	  }
 	  
+	
 	  @GET
 	  @Path("unit/{units}")
-	  @Produces(MediaType.APPLICATION_JSON)
+	  @Produces(MediaType.APPLICATION_JSON) 
 	  public Transport getTransportUnits(@PathParam("units") String units) 
 	  {
-		  LOGGER.info("Fetching source and destination with transport unit field : " + units ); 
-		  return transportRepository.fetchByTransportUnitsFromDB(units); 
-	  }
+		  LOGGER.info("Fetching source and destination with transport unit field : " + units );
+		  return transportRepository.fetchByTransportUnitsFromDB(units); }
+	 
 	  
 	  @GET
 	  @Path("unit/check/{units}")
-	    public Response getTransportsByunits(@PathParam("units") String units){
+	  public Response getTransportsByunits(@PathParam("units") String units){
 	         
-		  	LOGGER.info("To print the message in Postman using Response.status().entity().build()");
-	        return Response.status(200).entity("Got Transport with unit : " + units).build();
+	  	LOGGER.info("To print the message in Postman using Response.status().entity().build()");
+	  	LOGGER.info("Fetching object from DB with this unit"+transportRepository.fetchByTransportUnitsFromDB(units).getUnits());
+	  	
+        if(units.equals(transportRepository.fetchByTransportUnitsFromDB(units).getUnits())) 
+        {
+        	return Response.status(200).entity("This unit : " + units+" matched with DB").build();
+        }
+        else {
+        	return Response.status(200).entity("This unit : " + units+" is not matched with DB").build();
+        }
+	        
 	    }
 	 
 	  
@@ -64,21 +74,31 @@ public class SQLController {
 	  @Consumes({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
 	  public Transport updateTransport(Transport trans) throws SQLException {
 		  
-		  LOGGER.log(Level.INFO,"Updating a Transport JSON object :" + trans);
+		  LOGGER.log(Level.INFO,"Inside updateTransport() before updation, The transport JSON object :" + trans);
+		  
 		  LOGGER.info("Is the unit field matching with DB ? " + 
 		  transportRepository.fetchByTransportUnitsFromDB(trans.getUnits()).getUnits());
 		  
-		  if(transportRepository.fetchByTransportUnitsFromDB(trans.getUnits()).getUnits() != null) 
-		  {
-			  LOGGER.log(Level.INFO,"Existing record updated to " + trans);
+		  LOGGER.info("Source field in  DB is " + 
+				  transportRepository.fetchByTransportUnitsFromDB(trans.getUnits()).getSource());
+		  
+		  LOGGER.info("Destination field in  DB ? " + 
+				  transportRepository.fetchByTransportUnitsFromDB(trans.getUnits()).getDestination());
+		  
+		  
+		  LOGGER.info("The transport unit provided in the POSTMAN request body " + trans.getUnits());
+		  
+		  //The DB record match with Request body units
+		  if(transportRepository.fetchByTransportUnitsFromDB(trans.getUnits()).getUnits().equals(trans.getUnits())) 
+		  { 
 			  transportRepository.UpdateEntriesIntoDB(trans);
+			  LOGGER.log(Level.INFO,"Existing record updated to " + trans);
+			  
 		  }
 		  else
 		  {
-			  LOGGER.fine("Kindly don't change the Transport unit field :" + trans.getUnits());
-				  for(int n=200;n<500;n++) {
-				  Response.status(n).entity("Duplicate entries").build();
-			  }
+			  Response.serverError();
+			  LOGGER.info("Kindly don't change the Transport unit field :" + trans.getUnits());
 		  }
 		  return trans;
 	  }

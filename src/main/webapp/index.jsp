@@ -27,7 +27,7 @@ $(document).ready(function(){
 		// Open an obejct (GET/POST, PATH, 
 		// ASYN-TRUE/FALSE) 
 		xhr.open("GET", 
-				"http://localhost:8082/JerseyMaven/api/json", true);
+				"http://localhost:8082/JerseyMaven/api/forknal", true);
 		
 		// When response is ready 
 		xhr.onload = function () { 
@@ -105,8 +105,6 @@ $(document).ready(function(){
 	    <hr/>
 	    JSON Responses
 	    <hr/>
-	    <p>Visit <a href="http://jersey.java.net">Project Jersey website</a>
-	    for more information on Jersey!
   
     
 	<%! String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";%>

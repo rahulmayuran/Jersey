@@ -115,10 +115,7 @@ public class SQLTransportRepository {
 			} catch (SQLException e) {
 				
 				LOGGER.warning("Exception is printed for Connection failure with Datasource" + e);
-			}
-			
-			
-			
+			}	
 		}
 		
 		public void UpdateEntriesIntoDB(Transport insertTransport) throws SQLException {
